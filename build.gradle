@@ -1,6 +1,40 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    id 'com.android.application' version '7.3.1' apply false
-    id 'com.android.library' version '7.3.1' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url "https://jcenter.bintray.com/" }
+        maven { url 'https://maven.fabric.io/public'}
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-alpha04")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+// in below line we are adding configurations to our project.
+configurations.all {
+    // in below line we are adding strategy for each dependency and requesting the details
+    resolutionStrategy.eachDependency {DependencyResolveDetails details ->
+        // on below line we are getting to see the details using requested.
+        def requested = details.requested
+        // in below line we are requesting a group.
+        if (requested.group == 'com.android.support'){
+            // on below line we are checking if the request is a group and checking if it starts with com.android.support.
+            if(!requested.name.startsWith("multidex")){
+                // if the requested name starts with multi dex then we are displaying the use version which is given below.
+                details.useVersion '25.3.0'
+            }
+        }
+    }
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
