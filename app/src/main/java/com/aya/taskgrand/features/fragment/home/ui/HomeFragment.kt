@@ -11,7 +11,8 @@ import com.aya.taskgrand.R
 import com.aya.taskgrand.base.BaseFragment
 import com.aya.taskgrand.core.extension.observe
 import com.aya.taskgrand.databinding.HomeFragmentBinding
-import com.aya.taskgrand.features.fragment.home.data.MatchesResponse
+import com.aya.taskgrand.features.fragment.home.data.MatchesItems
+import com.aya.taskgrand.features.fragment.home.ui.adapter.ListMatchesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +22,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>(){
     private lateinit var navController : NavController
     override val mViewModel: HomeViewModel by viewModels()
 
+    private val adapter = ListMatchesAdapter()
+
 
     override fun onFragmentReady() {
 
@@ -28,6 +31,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>(){
             observe(viewState) {
                 handleViewState(it)
             }
+        }
+
+        binding.apply {
+
+            rvMatches.adapter = adapter
         }
 
     }
@@ -60,8 +68,9 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>(){
          }
     }
 
-    private fun handleListMatches(data : MatchesResponse) {
-
+    private fun handleListMatches(data : MatchesItems) {
+        adapter.submitList(data.matches)
+        adapter.setCompetition(data.competition!!)
     }
 
 }

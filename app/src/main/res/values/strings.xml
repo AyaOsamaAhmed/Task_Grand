@@ -5,4 +5,7 @@
     <string name="ok">Ok</string>
     <string name="day">Day</string>
     <string name="finished">Finished</string>
+    <string name="started_at">Started At</string>
+    <string name="week">Week</string>
+    <string name="last_days">Last Days</string>
 </resources>

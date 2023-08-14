@@ -7,19 +7,18 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MatchesItems(
-    val id: Int ,
-
+    val id: Int? = null,
     @field:SerializedName("count")
-    val count: Int? = null,
+    var count: Int? = null,
     @field:SerializedName("filters")
-    val filters: FiltersResponse? = null,
+    var filters: FiltersResponse? = null,
     @field:SerializedName("competition")
-    val competition: CompetitionResponse? = null,
+    var competition: CompetitionResponse? = null,
     @field:SerializedName("matches")
-    val matches: List<MatchResponse>? = null,
+    var matches: List<MatchItem>? = null,
 
             override var viewType: Int
 
 ): BasePaginationParcelable {
-    override fun unique(): Any = id
+    override fun unique(): Any = id!!
 }
