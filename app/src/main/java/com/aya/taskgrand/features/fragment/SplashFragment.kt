@@ -27,6 +27,18 @@ class SplashFragment : BaseFragment<SplashFragmentBinding, MainViewModel>()  {
         lifecycleScope.launch {
 
             delay(1000)
+            binding.progress.apply {
+                progress = 50
+                delay(1000)
+
+                progress = 75
+                delay(1000)
+
+                progress=100
+                delay(1000)
+
+            }
+
             navController.navigate(R.id.action_SplashFragment_to_HomeFragment)
         }
     }
