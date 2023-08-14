@@ -11,5 +11,14 @@
         android:name="com.aya.taskgrand.features.fragment.SplashFragment"
         tools:layout="@layout/splash_fragment">
 
+        <action android:id="@+id/action_SplashFragment_to_HomeFragment"
+            app:destination="@+id/HomeFragment"/>
     </fragment>
+
+    <fragment android:id="@+id/HomeFragment"
+        android:name="com.aya.taskgrand.features.fragment.home.ui.HomeFragment"
+        tools:layout="@layout/home_fragment">
+
+    </fragment>
+
 </navigation>
