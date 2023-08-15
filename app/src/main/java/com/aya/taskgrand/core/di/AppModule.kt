@@ -1,5 +1,8 @@
 package com.aya.taskgrand.core.di
 
+import android.app.Application
+import androidx.room.Room
+import com.aya.taskgrand.database.MatchesListDatabase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -17,5 +20,10 @@ class AppModule {
     @Provides
     fun provideGson(): Gson = Gson()
 
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application): MatchesListDatabase =
+        Room.databaseBuilder(app, MatchesListDatabase::class.java, "matches_database")
+            .build()
 
 }

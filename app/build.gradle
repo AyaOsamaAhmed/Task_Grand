@@ -76,6 +76,21 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.38.1")
 
     implementation 'androidx.test:core-ktx:1.4.0'
+
+// Extensions = ViewModel + LiveData
+  //  implementation "android.arch.lifecycle:extensions:1.1.1"
+  //  kapt "android.arch.lifecycle:compiler:1.1.1"
+// Room
+  //  implementation "android.arch.persistence.room:runtime:1.1.1"
+  //  kapt "android.arch.persistence.room:compiler:1.1.1"
+// Room
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    implementation 'androidx.room:room-runtime:2.5.0'
+    implementation 'androidx.room:room-ktx:2.5.0'
+    kapt "androidx.room:room-compiler:2.5.0"
+
     // implementation  'com.google.android.libraries.mapsplatform.secrets-gradle-plugin:2.0.1'
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 

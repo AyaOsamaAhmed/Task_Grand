@@ -1,10 +1,11 @@
 package com.aya.taskgrand.features.fragment.home.data
 
 import android.os.Parcelable
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-
+@Entity(tableName = "referees")
 @Parcelize
 data class RefereesResponse(
     @field:SerializedName("id")

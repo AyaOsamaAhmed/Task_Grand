@@ -1,6 +1,10 @@
 package com.aya.taskgrand.features.fragment.home.ui
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +15,10 @@ import com.aya.taskgrand.R
 import com.aya.taskgrand.base.BaseFragment
 import com.aya.taskgrand.core.extension.observe
 import com.aya.taskgrand.databinding.HomeFragmentBinding
+import com.aya.taskgrand.features.fragment.home.data.MatchDB
 import com.aya.taskgrand.features.fragment.home.data.MatchesItems
 import com.aya.taskgrand.features.fragment.home.ui.adapter.ListMatchesAdapter
+import com.aya.taskgrand.features.fragment.home.ui.adapter.ListMatchesDBAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +30,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>(){
 
     private val adapter = ListMatchesAdapter()
 
+    private val adapterDB = ListMatchesDBAdapter()
+
 
     override fun onFragmentReady() {
 
@@ -33,11 +41,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>(){
             }
         }
 
-        binding.apply {
-
-            rvMatches.adapter = adapter
-        }
-
+        mViewModel.handleGetData(isOnline(requireContext()))
     }
 
     override fun onCreateView(
@@ -64,13 +68,45 @@ class HomeFragment : BaseFragment<HomeFragmentBinding, HomeViewModel>(){
                 handleListMatches(action.listMatches)
             }
 
+            is HomeAction.ListMatchDB ->{
+                showToast("Get Database ** ${action.listMatches.size}")
+                setHandleDatabase(action.listMatches)
+            }
+
 
          }
     }
 
+    private fun setHandleDatabase(listMatches: List<MatchDB>) {
+        binding.rvMatches.adapter = adapterDB
+        adapterDB.submitList(listMatches)
+    }
+
     private fun handleListMatches(data : MatchesItems) {
+        binding.rvMatches.adapter = adapter
         adapter.submitList(data.matches)
         adapter.setCompetition(data.competition!!)
+    }
+
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                return true
+            }
+        }
+        return false
     }
 
 }

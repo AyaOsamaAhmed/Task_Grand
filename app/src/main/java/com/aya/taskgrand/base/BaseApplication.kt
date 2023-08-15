@@ -8,12 +8,10 @@ class BaseApplication : Application(){
 
 
     companion object {
-
     }
 
     override fun onCreate() {
         super.onCreate()
-
     }
 
 
